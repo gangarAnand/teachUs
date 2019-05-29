@@ -114,4 +114,79 @@ extension UIView {
         func makeEdgesRounded(){
             self.makeEdgesRoundedWith(radius: 10.0)
         }
+    
+    func makeTableCellEdgesRounded(){
+        self.makeEdgesRoundedWith(radius: 3.0)
+    }
+    
+    func makeTopEdgesRounded(){
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: 10, height: 10)).cgPath
+        self.layer.mask = maskLayer
+    }
+    
+    func makeTopEdgesRounded(radius:Int){
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: radius, height: radius)).cgPath
+        self.layer.mask = maskLayer
+    }
+    
+    
+    func makeBottomEdgesRounded(){
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft, .bottomRight], cornerRadii: CGSize(width: 10, height: 10)).cgPath
+        self.layer.mask = maskLayer
+        
+    }
+    
+    func makeBottomEdgesRounded(radius:Int){
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft, .bottomRight], cornerRadii: CGSize(width: radius, height: radius)).cgPath
+        self.layer.mask = maskLayer
+        
+    }
+
+    func makeViewCircular(){
+        self.makeEdgesRoundedWith(radius: self.height()/2)
+    }
+    
+    func dropShadow(scale: Bool = true) {
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOffset = CGSize(width: -1, height: 1)
+        self.layer.shadowRadius = 1
+        
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        self.layer.shouldRasterize = true
+        self.layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+    }
+    func addWhiteBottomBorder() {
+        let border = CALayer()
+        let borderWidth = CGFloat(1.0)
+        border.borderColor = UIColor.white.cgColor
+        border.frame = CGRect(origin: CGPoint(x: 0,y :self.frame.size.height - borderWidth), size: CGSize(width: self.frame.size.width, height: self.frame.size.height))
+        border.borderWidth = borderWidth
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+    }
+    
+    func removeDropShadow(){
+        self.layer.shadowOpacity = 0
+    }
+
+    func addShadow(){
+        self.layer.cornerRadius = 5
+        
+        // border
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = UIColor.lightGray.cgColor
+        
+        // shadow
+        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowOffset = CGSize(width: 3, height: 3)
+        self.layer.shadowOpacity = 0.1
+        self.layer.shadowRadius = 2.0
+    }
+    
 }
